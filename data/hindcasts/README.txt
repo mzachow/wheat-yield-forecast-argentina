@@ -1,2 +1,0 @@
-- BCC is only available at APCC CLIK. It missed data for November 2016 (which was carefully checked), hence it is not part of the analysis
-- HMC only has lead time of three months
