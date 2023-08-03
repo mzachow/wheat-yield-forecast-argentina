@@ -15,6 +15,7 @@ clik-apcc/data/shapefile/
 
 nmme/data/CCSM4/
 nmme/data/GFDL/
+nmme/data/GFDL2/
 nmme/data/NASA/
 nmme/data/NCEP/
 nmme/data/shapefile/
@@ -22,6 +23,7 @@ nmme/data/shapefile/
 c3s/data/CMCC/
 c3s/data/DWD/
 c3s/data/ECCC/
+c3s/data/ECCC_operational/
 c3s/data/ECMWF/
 c3s/data/ERA5/
 c3s/data/JMA/
