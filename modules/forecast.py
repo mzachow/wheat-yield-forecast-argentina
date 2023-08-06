@@ -33,7 +33,7 @@ def kfold_cross_validation(data, model="ECMWF", init=8, no_of_features=3):
                                                         ["year", "yield anomaly [%]"]], on="year", how="left"))
     # Features
     relevant_columns = [c for c in cv_dataset.columns if c not in ["model", "init_month", "year", "yield [kg/ha]", "yield_trend [kg/ha]", "yield anomaly [%]"]]
-    
+    year_to_features = {}
     for season in list(range(1993,2017)):
         X_train = cv_dataset.loc[((cv_dataset["model"] == "ERA") & (cv_dataset["year"] != season)), relevant_columns].reset_index(drop=True)
         y_train = cv_dataset.loc[((cv_dataset["model"] == "ERA") & (cv_dataset["year"] != season)), "yield anomaly [%]"].reset_index(drop=True)
@@ -50,14 +50,12 @@ def kfold_cross_validation(data, model="ECMWF", init=8, no_of_features=3):
         coefficients = reg["estimator"].coef_
         bias = reg["estimator"].intercept_
         features = reg["selector"].get_feature_names_out(relevant_columns)
-        print(features)
+        year_to_features[season] = features
         X_val = cv_dataset.loc[(cv_dataset["model"] == model)
                                & (cv_dataset["year"] == season), relevant_columns].reset_index(drop=True)
         
         y_predicted = reg.predict(X_val)[0]
         
-            
-        # each forecast is weighted by the group's relative contribution to national harvested area
         national_forecasts_by_year.loc[national_forecasts_by_year["year"] == season, "predicted"] = y_predicted
     
-    return national_forecasts_by_year
+    return (national_forecasts_by_year, year_to_features)
