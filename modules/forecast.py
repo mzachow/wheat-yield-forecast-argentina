@@ -11,13 +11,14 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.feature_selection import SelectKBest, f_regression, VarianceThreshold
   
 # K-Fold Cross Validation
-def kfold_cross_validation(data, model="ECMWF", init=8, no_of_features=3):
+def kfold_cross_validation(data, model="ECMWF", init=8, augment=False, no_of_features=3):
     """Retrain, select features, and directly forecast yield on national level.
     
     params:
      - data: all features and yield on national level for all years
      - model: hindcast model to validate (default: ECMWF)
      - init: month of model initialization to validate (default:8)
+     - augment: boolean, if train data should use SCM data in addition to ERA
      - no_of_features: the number of most correlated features with the target to be selected
      
     returns:
@@ -33,10 +34,13 @@ def kfold_cross_validation(data, model="ECMWF", init=8, no_of_features=3):
                                                         ["year", "yield anomaly [%]"]], on="year", how="left"))
     # Features
     relevant_columns = [c for c in cv_dataset.columns if c not in ["model", "init_month", "year", "yield [kg/ha]", "yield_trend [kg/ha]", "yield anomaly [%]"]]
+    
     year_to_features = {}
+    if augment: models_for_training = ["ERA", model]
+    else: models_for_training = ["ERA"]
     for season in list(range(1993,2017)):
-        X_train = cv_dataset.loc[((cv_dataset["model"] == "ERA") & (cv_dataset["year"] != season)), relevant_columns].reset_index(drop=True)
-        y_train = cv_dataset.loc[((cv_dataset["model"] == "ERA") & (cv_dataset["year"] != season)), "yield anomaly [%]"].reset_index(drop=True)
+        X_train = cv_dataset.loc[((cv_dataset["model"].isin(models_for_training)) & (cv_dataset["year"] != season)), relevant_columns].reset_index(drop=True)
+        y_train = cv_dataset.loc[((cv_dataset["model"].isin(models_for_training)) & (cv_dataset["year"] != season)), "yield anomaly [%]"].reset_index(drop=True)
         
         #print(season)
         #print(X_train)    
