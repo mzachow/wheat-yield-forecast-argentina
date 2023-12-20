@@ -11,7 +11,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.feature_selection import SelectKBest, f_regression, VarianceThreshold
   
 # K-Fold Cross Validation
-def kfold_cross_validation(data, model="ECMWF", init=8, augment=False, no_of_features=3):
+def kfold_cross_validation(data, model="ECMWF", init=8, augment=False, no_of_features=3, alpha=3):
     """Retrain, select features, and directly forecast yield on national level.
     
     params:
@@ -47,7 +47,7 @@ def kfold_cross_validation(data, model="ECMWF", init=8, augment=False, no_of_fea
         pipeline = Pipeline([('scaler', StandardScaler()), 
                              ('var', VarianceThreshold()), 
                              ('selector', SelectKBest(f_regression, k=no_of_features)),
-                             ('estimator', Ridge())])
+                             ('estimator', Ridge(alpha=alpha))])
         
         reg = pipeline.fit(X_train, y_train)  
         
