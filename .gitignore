@@ -1,36 +1,9 @@
 data/shapefile/
 data/ERA/
-
-clik-apcc/data/BCC/
-clik-apcc/data/BOM/
-clik-apcc/data/CMCC/
-clik-apcc/data/CWB/
-clik-apcc/data/ECCC/
-clik-apcc/data/HMC/
-clik-apcc/data/KMA/
-clik-apcc/data/PNU/
-clik-apcc/data/CWB/
-clik-apcc/data/NCEP/
-clik-apcc/data/shapefile/
-
-nmme/data/CCSM4/
-nmme/data/GFDL/
-nmme/data/GFDL2/
-nmme/data/NASA/
-nmme/data/NCEP/
-nmme/data/NCEP old/
-nmme/data/shapefile/
-
-c3s/data/CMCC/
-c3s/data/DWD/
-c3s/data/ECCC/
-c3s/data/ECCC_operational/
-c3s/data/ECMWF/
-c3s/data/ERA5/
-c3s/data/JMA/
-c3s/data/METFR/
-c3s/data/UKMO/
-c3s/data/shapefile/
+files/
+clik-apcc/data/
+nmme/data/
+c3s/data/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
